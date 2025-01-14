@@ -1,6 +1,10 @@
 # terraform-aws-firewall-manager
 A Terraform module that creates AWS Firewall Manager.
 
+## Examples
+
+- See [Example Codes](https://github.com/aws-ss/terraform-aws-firewall-manager/tree/main/examples) for full details.
+
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
