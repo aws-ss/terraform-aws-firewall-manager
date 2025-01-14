@@ -107,7 +107,7 @@ resource "aws_fms_policy" "this" {
   }
 
   security_service_policy_data {
-    type                 = upper(var.type)
+    type                 = var.type
     managed_service_data = jsonencode(local.managed_service_data)
   }
 }
