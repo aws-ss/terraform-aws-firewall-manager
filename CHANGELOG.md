@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.1](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.0...v1.0.1) (2025-01-14)
+
+
+### Bug Fixes
+
+* Update README.md and example ([7f09933](https://github.com/aws-ss/terraform-aws-firewall-manager/commit/7f09933302d5240e724763ee654f67c3177c608c))
+
 ## 1.0.0 (2025-01-14)
 
 
