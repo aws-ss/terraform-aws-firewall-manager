@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.2](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.1...v1.0.2) (2025-01-14)
+
+
+### Bug Fixes
+
+* Remove upper() function ([7301ce7](https://github.com/aws-ss/terraform-aws-firewall-manager/commit/7301ce77df529d48ba70a02b6ddcfaf8e7105849))
+
 ### [1.0.1](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.0...v1.0.1) (2025-01-14)
 
 
