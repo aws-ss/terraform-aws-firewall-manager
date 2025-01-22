@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.3](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.2...v1.0.3) (2025-01-22)
+
+
+### Bug Fixes
+
+* Inconsistent result types in if-else expressions for 'managed_service_data' ([02437d0](https://github.com/aws-ss/terraform-aws-firewall-manager/commit/02437d06e2bf48b3fdce4c19bc83cbe98ea91b55))
+
 ### [1.0.2](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.1...v1.0.2) (2025-01-14)
 
 
