@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.4](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.3...v1.0.4) (2025-01-22)
+
+
+### Bug Fixes
+
+* Update example code for 'SHIELD_ADVANCED' ([44022ac](https://github.com/aws-ss/terraform-aws-firewall-manager/commit/44022ac8c05d0a797a47120069682209fbd4b943))
+
 ### [1.0.3](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.2...v1.0.3) (2025-01-22)
 
 
