@@ -41,7 +41,7 @@ locals {
 
   managed_service_data = var.type == "WAFV2" ? merge(local.default,
     {
-      type                  = var.type
+      type                  = lookup(var.managed_service_data, "type")
       preProcessRuleGroups  = lookup(var.managed_service_data, "preProcessRuleGroups", [])
       postProcessRuleGroups = lookup(var.managed_service_data, "postProcessRuleGroups", [])
       defaultAction = {
@@ -52,33 +52,25 @@ locals {
       overrideCustomerWebACLAssociation       = lookup(var.managed_service_data, "overrideCustomerWebACLAssociation", false)
       loggingConfiguration                    = lookup(var.managed_service_data, "loggingConfiguration", null)
       sampledRequestsEnabledForDefaultActions = lookup(var.managed_service_data, "sampledRequestsEnabledForDefaultActions", false)
-      captchaConfig = {
-        immunityTimeProperty = {
-          immunityTime = lookup(var.managed_service_data, "captchaConfig", 300)
-        }
-      }
-      challengeConfig = {
-        immunityTimeProperty = {
-          immunityTime = lookup(var.managed_service_data, "challengeConfig", 300)
-        }
-      }
-      tokenDomains               = lookup(var.managed_service_data, "tokenDomains", null)
-      optimizeUnassociatedWebACL = lookup(var.managed_service_data, "optimizeUnassociatedWebACL", false)
-      webACLSource               = lookup(var.managed_service_data, "webACLSource", "DEFAULT")
+      captchaConfig                           = lookup(var.managed_service_data, "captchaConfig", null)
+      challengeConfig                         = lookup(var.managed_service_data, "challengeConfig", null)
+      tokenDomains                            = lookup(var.managed_service_data, "tokenDomains", null)
+      optimizeUnassociatedWebACL              = lookup(var.managed_service_data, "optimizeUnassociatedWebACL", false)
+      webACLSource                            = lookup(var.managed_service_data, "webACLSource", "DEFAULT")
     }
     ) : var.type == "SHIELD_ADVANCED" ? merge(local.default,
     {
-      type                           = var.type
+      type = lookup(var.managed_service_data, "type")
       automaticResponseConfiguration = {
         automaticResponseStatus = lookup(var.managed_service_data, "automaticResponseStatus", "DISABLED")
         automaticResponseAction = lookup(var.managed_service_data, "automaticResponseAction", null)
       }
-      optimizeUnassociatedWebACL     = lookup(var.managed_service_data, "optimizeUnassociatedWebACL", false)
-      overrideCustomerWebaclClassic  = lookup(var.managed_service_data, "overrideCustomerWebaclClassic", false)
+      optimizeUnassociatedWebACL    = lookup(var.managed_service_data, "optimizeUnassociatedWebACL", false)
+      overrideCustomerWebaclClassic = lookup(var.managed_service_data, "overrideCustomerWebaclClassic", false)
     }
     ) : var.type == "SECURITY_GROUPS_COMMON" ? merge(local.default,
     {
-      type                                      = var.type
+      type                                      = lookup(var.managed_service_data, "type")
       securityGroups                            = lookup(var.managed_service_data, "securityGroups", [])
       securityGroupAction                       = lookup(var.managed_service_data, "securityGroupAction", null)
       revertManualSecurityGroupChanges          = lookup(var.managed_service_data, "revertManualSecurityGroupChanges", false)
@@ -90,7 +82,7 @@ locals {
     }
     ) : var.type == "SECURITY_GROUPS_CONTENT_AUDIT" ? merge(local.default,
     {
-      type              = var.type
+      type              = lookup(var.managed_service_data, "type")
       preManagedOptions = lookup(var.managed_service_data, "preManagedOptions", null)
       securityGroups    = lookup(var.managed_service_data, "securityGroups")
       securityGroupAction = {
@@ -99,7 +91,7 @@ locals {
     }
     ) : var.type == "SECURITY_GROUPS_USAGE_AUDIT" ? merge(local.default,
     {
-      type                            = var.type
+      type                            = lookup(var.managed_service_data, "type")
       deleteUnusedSecurityGroups      = lookup(var.managed_service_data, "deleteUnusedSecurityGroups", false)
       coalesceRedundantSecurityGroups = lookup(var.managed_service_data, "coalesceRedundantSecurityGroups", false)
       # 'optionalDelayForUnusedInMinutes' field only applies if deleteUnusedSecurityGroups is set to true.
@@ -107,7 +99,7 @@ locals {
     }
     ) : var.type == "NETWORK_FIREWALL" ? merge(local.default,
     {
-      type = var.type
+      type = lookup(var.managed_service_data, "type")
       # Centralized deployment model
       awsNetworkFirewallConfig = lookup(var.managed_service_data, "awsNetworkFirewallConfig", null)
       firewallDeploymentModel  = lookup(var.managed_service_data, "firewallDeploymentModel", null)
@@ -122,7 +114,7 @@ locals {
     }
     ) : var.type == "DNS_FIREWALL" ? merge(local.default,
     {
-      type                  = var.type
+      type                  = lookup(var.managed_service_data, "type")
       preProcessRuleGroups  = lookup(var.managed_service_data, "preProcessRuleGroups", [])
       postProcessRuleGroups = lookup(var.managed_service_data, "postProcessRuleGroups", [])
     }

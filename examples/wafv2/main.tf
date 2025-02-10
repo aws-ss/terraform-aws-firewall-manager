@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "ap-northeast-2"
-}
-
 module "fms01" {
   source = "../..//"
 
@@ -12,148 +8,127 @@ module "fms01" {
     "account" : ["111111111111", "222222222222"]
   }
   managed_service_data = {
-    preProcessRuleGroups = [
+    "preProcessRuleGroups" : [
       {
-        "ruleGroupArn" : null,
+        "ruleGroupType" : "RuleGroup",
         "overrideAction" : {
           "type" : "NONE"
         },
-        "managedRuleGroupIdentifier" : {
-          "versionEnabled" : null,
-          "version" : null,
-          "vendorName" : "AWS",
-          "managedRuleGroupName" : "AWSManagedRulesKnownBadInputsRuleSet"
-        },
-        "ruleGroupType" : "ManagedRuleGroup",
+        "sampledRequestsEnabled" : true,
         "excludeRules" : [],
-        "sampledRequestsEnabled" : true
+        "ruleGroupArn" : "",
+        "ruleGroupName" : "BLOCK_IP_ADDRESS"
       }
     ]
-    default_action                          = "allow"
-    sampledRequestsEnabledForDefaultActions = true
+    "defaultAction" : { "type" : "ALLOW" },
+    "type" : "WAFV2",
+    "overrideCustomerWebACLAssociation" : false,
+    "sampledRequestsEnabledForDefaultActions" : true,
+    "optimizeUnassociatedWebACL" : false,
+    # 'DEFAULT' or 'RETROFIT_EXISTING'
+    "webACLSource" : "DEFAULT"
   }
 }
 
-module "fms02" {
-  source = "../..//"
-
-  name               = "fms02"
-  type               = "WAFV2"
-  resource_type_list = ["AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ApiGateway::Stage"]
-  include_map = {
-    "account" : ["111111111111"]
-  }
-  managed_service_data = {
-    preProcessRuleGroups = [
-      {
-        "ruleGroupArn": null,
-        "overrideAction": {
-          "type": "NONE"
-        },
-        "managedRuleGroupIdentifier": {
-          "versionEnabled": true,
-          "version": null,
-          "vendorName": "AWS",
-          "managedRuleGroupName": "AWSManagedRulesATPRuleSet",
-          "managedRuleGroupConfigs": [
-            {
-              "awsmanagedRulesATPRuleSet": {
-                "loginPath": "/web/login",
-                "requestInspection": {
-                  "payloadType": "JSON",
-                  "usernameField": {
-                    "identifier": "/form/username"
-                  },
-                  "passwordField": {
-                    "identifier": "/form/password"
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "ruleGroupType": "ManagedRuleGroup",
-        "excludeRules": [],
-        "sampledRequestsEnabled": true,
-        "ruleActionOverrides": [
-          {
-            "name": "AttributeCompromisedCredentials",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "AttributeLongSession",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "AttributePasswordTraversal",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "AttributeUsernameTraversal",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "SignalMissingCredential",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "TokenRejected",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "UnsupportedCognitoIDP",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "VolumetricIpHigh",
-            "actionToUse": {
-              "challenge": {}
-            }
-          },
-          {
-            "name": "VolumetricSession",
-            "actionToUse": {
-              "challenge": {}
-            }
-          }
-        ]
-      }
-    ]
-    default_action                          = "block"
-    customResponse                          = {
-        "enableCustomResponse": true,
-        "customResponseBodyKey": "fms",
-        "responseCode": 403,
-        "responseHeaders": [
-          {
-            "headerName": "x-custom-response",
-            "headerValue": "fms"
-          }
-        ],
-        "customResponseBodies": {
-          "fms": {
-            "responseBodyType": "APPLICATION_JSON",
-            "responseBody": "{\"error\": \"accessDenied\"}"
-          }
-        }
-    }
-    sampledRequestsEnabledForDefaultActions = true
-    captchaConfig                           = 500
-    challengeConfig                         = 500
-    tokenDomains                            = ["test.com"]
-  }
-}
+#module "fms02" {
+#  source = "../..//"
+#
+#  name               = "fms02"
+#  type               = "WAFV2"
+#  resource_type_list = ["AWS::ElasticLoadBalancingV2::LoadBalancer", "AWS::ApiGateway::Stage"]
+#  include_map = {
+#    "account" : ["111111111111"]
+#  }
+#  managed_service_data = {
+#    "preProcessRuleGroups" : [
+#      {
+#        "ruleGroupType" : "ManagedRuleGroup",
+#        "overrideAction" : { "type" : "NONE" },
+#        "sampledRequestsEnabled" : true,
+#        "ruleActionOverrides" : [
+#          {
+#            "name" : "AttributeCompromisedCredentials",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "AttributeLongSession",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "AttributePasswordTraversal",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "AttributeUsernameTraversal",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "SignalMissingCredential",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "TokenRejected",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "UnsupportedCognitoIDP",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "VolumetricIpHigh",
+#            "actionToUse" : { "challenge" : {} }
+#          },
+#          {
+#            "name" : "VolumetricSession",
+#            "actionToUse" : { "challenge" : {} }
+#          }
+#        ],
+#        "managedRuleGroupIdentifier" : {
+#          "managedRuleGroupName" : "AWSManagedRulesATPRuleSet",
+#          "vendorName" : "AWS",
+#          "versionEnabled" : true,
+#          "version" : null,
+#          "managedRuleGroupConfigs" : [
+#            {
+#              "awsmanagedRulesATPRuleSet" : {
+#                "loginPath" : "/web/login",
+#                "requestInspection" : {
+#                  "payloadType" : "JSON",
+#                  "usernameField" : { "identifier" : "/form/username" },
+#                  "passwordField" : { "identifier" : "/form/password" }
+#                }
+#              }
+#            }
+#          ]
+#        }
+#      }
+#    ],
+#    "postProcessRuleGroups" : [],
+#    "defaultAction" : { "type" : "BLOCK" },
+#    "customRequestHandling" : null,
+#    "associationConfig" : null,
+#    "tokenDomains" : ["test.com"],
+#    "customResponse" : {
+#      "enableCustomResponse" : true,
+#      "customResponseBodyKey" : "fms",
+#      "responseCode" : 403,
+#      "responseHeaders" : [
+#        {
+#          "headerName" : "x-custom-response",
+#          "headerValue" : "fms"
+#        }
+#      ],
+#      "customResponseBodies" : {
+#        "fms" : {
+#          "responseBodyType" : "APPLICATION_JSON",
+#          "responseBody" : "{\\'error\\': \\'accessDenied\\'}"
+#        }
+#      }
+#    },
+#    "type" : "WAFV2",
+#    "overrideCustomerWebACLAssociation" : false,
+#    "sampledRequestsEnabledForDefaultActions" : true,
+#    "optimizeUnassociatedWebACL" : false,
+#    "webACLSource" : "DEFAULT"
+#  }
+#}
