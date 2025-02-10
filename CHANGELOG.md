@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.4...v1.1.0) (2025-02-10)
+
+
+### Features
+
+* Changed the `managed_service_data` field to make it easier to import ([397d420](https://github.com/aws-ss/terraform-aws-firewall-manager/commit/397d420bcbc5c03f05e6bcc00e096e560bf78f44))
+
 ### [1.0.4](https://github.com/aws-ss/terraform-aws-firewall-manager/compare/v1.0.3...v1.0.4) (2025-01-22)
 
 
